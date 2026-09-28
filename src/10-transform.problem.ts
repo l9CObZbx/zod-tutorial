@@ -3,9 +3,16 @@
 import { expect, it } from "vitest";
 import { z } from "zod";
 
-const StarWarsPerson = z.object({
-  name: z.string(),
-});
+const StarWarsPerson = z
+  .object({
+    name: z.string(),
+    nameAsArray: z.array(z.string()).optional(),
+  })
+  .transform((v) => ({
+    ...v,
+    nameAsArray: v.name.split(" "),
+  }));
+
 //^ 🕵️‍♂️
 
 const StarWarsPeopleResults = z.object({
